@@ -1,0 +1,58 @@
+{% extends "base.html" %}{% load static %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="header mb-2">
+      <p class='display-5 text-center'>
+        Liste der Referenzsysteme
+      </p>
+      <ul>
+        <a class=" w-20 btn btn-secondary mt-2" href="{% url 'index' %}"><i class="fas fa-arrow-left"></i>
+          Start</a>
+        <a class=" w-20 btn btn-primary mt-2" href="{% url 'referencemodel-create' %}"><i
+            class="far fa-plus-square"></i>
+          Neues Referenz-System
+          anlegen!</a>
+        <a class=" w-20 btn btn-primary mt-2" href="{% url 'technology-list' %}"><i class="fas fa-hammer"></i>
+          Technologien</a>
+      </ul>
+    </div>
+  </div>
+  <div class="container" style="background-color:rgb(255, 245, 238, 0.8) ;border-radius: 4px;
+  color: rgba(21, 52, 78, 0.8);">
+    <div class="row px-3 justify-content">
+      <ul>
+        {% for ref in object_list %}
+        <a class="w-20 btn btn-info m-2" href="{% url 'referencemodel-detail' pk=ref.id %}">
+          <i class="fas fa-globe"></i></i> {{ref.name }}
+        </a>
+        <ul>
+          <div class="table-responsive">
+            <table class="table table-striped table-hover table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Laufzeit im Jahr</th>
+                  <th scope="col">Betrachtungszeitraum</th>
+                  <th scope="col">Produktpreis</th>
+                  <th scope="col">Lohnnebenkostenanteil</th>
+                  <th scope="col">Materialdichte</th>
+                  <th scope="col">Materialkilopreis</th>
+                </tr>
+              </thead>
+              <tbody>
+                <td>{{ref.laufzeit_jahr}} pro Jahr</td>
+                <td>{{ref.betrachtungszeitraum}} Jahr(e)</td>
+                <td>{{ref.produktpreis}} €</td>
+                <td>{{ref.lohnnebenkostenanteil}}</td>
+                <td>{{ref.dichte}}</td>
+                <td>{{ref.kilopreis}} kg</td>
+              </tbody>
+            </table>
+          </div>
+        </ul>
+        {% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends "base.html" %}{% load static %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="header mb-2">
+      <h2 class='display-4 text-center pb-5' style='font-size:70px;'>
+        Fertigungsprozessfolge
+      </h2>
+      <ul>
+        <a class="w-20 btn btn-secondary m-3" href="#"><i class="fas fa-arrow-left"></i>
+          Zurück</a>
+        <form method="post">
+          {% csrf_token %}
+          <table>
+            {{ form.as_table }}
+          </table>
+          <button class="w-20 btn btn-success mt-2" type="submit"><i class="fas fa-cloud-upload-alt"></i>
+            Speichern</button>
+        </form>
+      </ul>
+    </div>
+  </div>
+  <div class="container" style="background-color:rgb(255, 245, 238, 0.8) ;border-radius: 4px;
+  color: rgba(21, 52, 78, 0.8);">
+    <div class="row">
+      <div class="col">
+        <p class="display-5 text-center">
+          Aktuelle Fertigungsprozessfolge
+        </p>
+      </div>
+    </div>
+    <div class="row p-1">
+      <div class="col">
+      </div>
+      <div class="col-6">
+        {% for member in membership %}
+        <div class="row p-2" style="background-color: rgba(21, 52, 78, 0.8);border-radius: 4px;">
+          <div class="col">
+            <h3 style="color: seashell;">
+              {{member.position}}. Technologie: {{member.tool}}
+            </h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-1 offset-md-5" style="background-color: rgba(21, 52, 78, 0.5);">
+            <p></p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="col">
+      </div>
+    </div>
+    <div class="row" style="background-color: rgb(255, 245, 238, 0);">
+      <p></p>
+    </div>
+  </div>
+</div>
+{% endblock %}

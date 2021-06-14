@@ -1,0 +1,138 @@
+{% extends "base.html" %}{% load static %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="header mb-2">
+      <p class="display-5 text-center">Referenzsystem</p>
+      <p class='display-1 text-center'>
+        {{object.name}}
+      </p>
+      <ul>
+        <a class="w-20 btn btn-secondary mt-1" href="{% url 'referencemodel-list' %}"><i class="fas fa-arrow-left"></i>
+          Zurück</a>
+        <a class="w-20 btn btn-light mt-1" style="color: orange;" href="{% url 'referencemodel-update' object.id %}"><i
+            class="fas fa-pencil-alt"></i></i> Update</a></li>
+        <a class="w-20 btn btn-light mt-1" style="color: red;" href="{% url 'referencemodel-delete' object.id %}"><i
+            class="far fa-trash-alt"></i> Referenzsystem löschen</a></li>
+        {% if object.item %}
+        <a class="w-20 btn btn-primary mt-1"
+          href="{% url 'fct-table' object.id object.item.feature_set.first.featureattribute_set.first.id %}"><i
+            class="fas fa-hammer"></i> FCT-Tabelle
+          bearbeiten</a>
+        {% if show %}
+        <a class="w-20 btn btn-primary mt-1" href="{% url 'fct-volume' object.id %}"><i class="fas fa-calculator"></i>
+          Volumen berechnen</a>
+        {% endif %}
+        {% else %}
+        <a class="w-20 btn btn-success mt-1" href="{% url 'refupload' object.id %}"><i
+            class="fas fa-cloud-upload-alt"></i>
+          Referenzbauteil hochladen</a>
+        {% endif %}
+      </ul>
+
+      <div class="container mb-2" style="background-color:rgb(255, 245, 238, 0.8) ;border-radius: 4px;
+          color: rgba(21, 52, 78, 0.8);">
+        <h5 class="pt-1">
+          Systemparameter
+        </h5>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-sm">
+
+            <thead>
+              <tr>
+                <td scope="col">Laufzeit pro Jahr</td>
+                <td scope="col">Betrachtungszeitraum</td>
+                <td scope="col">Produktpreis</td>
+                <td scope="col">Lohnebenkostenanteil</td>
+                <td scope="col">Dichte Material</td>
+                <td scope="col">Materialkolopreis</td>
+              </tr>
+            </thead>
+            <tbody>
+              <td>{{object.laufzeit_jahr}} h/a</td>
+              <td>{{object.betrachtungszeitraum}} a</td>
+              <td>{{object.produktpreis}} €</td>
+              <td>{{object.lohnnebenkostenanteil}}</td>
+              <td>{{object.dichte}} g/mm3</td>
+              <td>{{object.kilopreis}} €/kg</td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div class="container" style="color: red; background-color: peachpuff;">
+    {% if features %}
+    {%else%}
+    <h3 style="color: crimson;">Bauteil hochladen!!!
+    </h3>
+    {% endif %}
+  </div>
+  <div class="container" style="background-color:rgb(255, 245, 238, 0.8) ;border-radius: 4px;
+  color: rgba(21, 52, 78, 0.8);">
+    <div class="row">
+      <div class="col">
+        <p class="display-5 text-center">
+          Fertigungsprozessfolge
+        </p>
+      </div>
+    </div>
+    <div class="row p-1">
+      <div class="col">
+        <a class="w-20 btn btn-primary mt-1" href="{% url 'reference-technology' object.id %}"><i
+            class="fas fa-plus"></i>
+          Technologie hinzufügen</a>
+      </div>
+      <div class="col-8">
+        {% for technology in technologies %}
+        <div class="row p-2" style="background-color: rgba(21, 52, 78, 0.8);border-radius: 4px;">
+          <div class="col-10">
+            <h5 style="color: seashell;">{{technology.position}}. {{technology.tool.technology.name}}:
+              {{technology.tool.name}}</h5>
+            <ul>
+              <div class="table-responsive">
+                <table class="table table-striped table-hover table-sm" style="color: seashell;">
+                  <thead>
+                    <tr>
+                      <td scope="col">Hauptzeit</td>
+                      <td scope="col">Standmenge</td>
+                      <td scope="col">Losgröße</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <td style="color: seashell;">{{technology.hauptzeit}} s</td>
+                    <td style="color: seashell;">{{technology.standmenge}}</td>
+                    <td style="color: seashell;">{{technology.losgroesse}}</td>
+                  </tbody>
+                </table>
+              </div>
+            </ul>
+          </div>
+          <div class="col">
+            <a class="btn btn-light rounded-circle hover"
+              href="{% url 'reference-technology-delete' pk=technology.id ref=object.id %}"><i class="far fa-trash-alt"
+                style="color: red;"></i>
+            </a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-2 offset-md-5" style="background-color: rgba(21, 52, 78, 0.5);">
+            <p></p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <div class="col">
+        <p></p>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  .hover:hover {
+    font-size: 15px;
+    border-color: red;
+  }
+</style>
+{% endblock %}

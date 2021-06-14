@@ -1,0 +1,79 @@
+{% extends "base.html" %}{% load static %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="header mb-2">
+      <p class='display-4 text-center'>
+        Referenzsystem
+      </p>
+      <p class='display-5 text-center'>
+        Neu anlegen oder updaten
+      </p>
+      <ul>
+        <a class="w-20 btn btn-secondary m-3" href="{% url 'referencemodel-list' %}"><i class="fas fa-arrow-left"></i>
+          Zurück</a>
+        <form method="post">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-sm">
+              Name Referenzsystem
+            </div>
+            <div class="col-sm">
+              {{ form.name}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Laufzeit im Jahr [h/a]
+            </div>
+            <div class="col-sm">
+              {{ form.laufzeit_jahr}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Betrachtungszeitraum [a]
+            </div>
+            <div class="col-sm">
+              {{ form.betrachtungszeitraum}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Verkaufspreis Produkt [€]
+            </div>
+            <div class="col-sm">
+              {{ form.produktpreis}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Lohnnebenkostenanteil
+            </div>
+            <div class="col-sm">
+              {{ form.lohnnebenkostenanteil}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Materialdicht Rohmaterial [g/mm^3]
+            </div>
+            <div class="col-sm">
+              {{ form.dichte}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Kilopreis des Materials [€/kg]
+            </div>
+            <div class="col-sm">
+              {{ form.kilopreis}}
+            </div>
+          </div>
+          <button class="w-20 btn btn-success mt-2" type="submit"><i class="fas fa-cloud-upload-alt"></i>
+            Speichern</button>
+        </form>
+      </ul>
+    </div>
+  </div>
+  {% endblock %}

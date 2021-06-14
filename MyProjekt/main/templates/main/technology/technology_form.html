@@ -1,0 +1,134 @@
+{% extends "base.html" %}{% load static %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="header mb-2">
+      <h2 class='display-4 text-center pb-5' style='font-size:70px;'>
+        Technologie
+      </h2>
+      <ul>
+        <a class="w-20 btn btn-secondary m-3" href="{% url 'technology-list' %}"><i class="fas fa-arrow-left"></i>
+          Zurück</a>
+        <form method="post">
+          {% csrf_token %}
+
+          <div class="row">
+            <div class="col-sm">
+              Technologie Name
+            </div>
+            <div class="col-sm">
+              {{ form.name}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Restfertigungsgemeinkosten [€]
+            </div>
+            <div class="col-sm">
+              {{ form.restfertigungsgemeinkosten}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Anschaffungswert [€]
+            </div>
+            <div class="col-sm">
+              {{ form.anschaffungswert}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Verkaufserlös [€]
+            </div>
+            <div class="col-sm">
+              {{ form.verkaufserlös}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Abschreibungsdauer [a]
+            </div>
+            <div class="col-sm">
+              {{ form.abschreibungsdauer}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Platzbedarf [m^2]
+            </div>
+            <div class="col-sm">
+              {{ form.platzbedarf}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Mittlere Leistung [kW]
+            </div>
+            <div class="col-sm">
+              {{ form.mittlere_leistung}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Instandhaltungsfaktor
+            </div>
+            <div class="col-sm">
+              {{ form.instandhaltungsfaktor}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Quadratmeterpreis [€/m^2]
+            </div>
+            <div class="col-sm">
+              {{ form.quadratmeterpreis}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Strompreis [€/kWh]
+            </div>
+            <div class="col-sm">
+              {{ form.strompreis}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Zinsatz
+            </div>
+            <div class="col-sm">
+              {{ form.zinsatz}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Stundenlohn [€/h]
+            </div>
+            <div class="col-sm">
+              {{ form.stundenlohn}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Fertigungsmittelanzahl
+            </div>
+            <div class="col-sm">
+              {{ form.fertigungsmittelanzahl}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Bediehnverhaeltnis
+            </div>
+            <div class="col-sm">
+              {{ form.bediehnverhaeltnis}}
+            </div>
+          </div>
+          <button class="w-20 btn btn-success mt-2" type="submit"><i class="fas fa-cloud-upload-alt"></i>
+            Speichern</button>
+        </form>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends "base.html" %}{% load static %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="header mb-2">
+      <h2 class='display-4 text-center pb-5' style='font-size:70px;'>
+        Technologie löschen
+      </h2>
+      <ul>
+        <a class="w-20 btn btn-light m-3" href="{% url 'technology-detail' technology.id %}"><i
+            class="fas fa-arrow-left"></i>
+          Zurück</a>
+        <p style="color:crimson">Bist du dir sicher, dass du die Technologie löschen möchtest?</p>
+        <form method="POST">
+          {% csrf_token %}
+          <input class="w-20 btn btn-danger" type="submit" value="Ja, bin ich.">
+        </form>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

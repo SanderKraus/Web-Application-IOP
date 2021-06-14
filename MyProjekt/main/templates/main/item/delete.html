@@ -1,0 +1,21 @@
+{% extends "base.html" %}{% load static %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="header mb-2">
+      <p class='display-5 text-center pb-5'>
+        Bauteil löschen
+      </p>
+      <ul>
+        <a class="w-20 btn btn-secondary m-3" href="{% url 'item-detail' object.id %}"><i class="fas fa-arrow-left"></i>
+          Zurück</a>
+        <p style="color:crimson">Bist du dir sicher, dass du das Bauteil löschen möchtest?</p>
+        <form method="POST">
+          {% csrf_token %}
+          <input class="w-20 btn btn-danger" type="submit" value="Ja, bin ich.">
+        </form>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

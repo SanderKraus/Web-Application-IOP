@@ -1,0 +1,224 @@
+{% extends "base.html" %}{% load static %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="header mb-2">
+      <p class="display-5 text-center">Kostenvergleich</p>
+      <p class='display-3 text-center'>
+        {{object.name}}
+      </p>
+      <p class='display-5 text-center'>
+        {{object.compare_reference.name}}
+      </p>
+      <ul>
+        <a class="w-20 btn btn-secondary mt-1" href="{% url 'item-list' %}"><i class="fas fa-arrow-left"></i>
+          Zurück</a>
+        <a class="w-20 btn btn-danger mt-1" href="{% url 'item-delete' object.id %}"><i class="far fa-trash-alt"></i>
+          Bauteil löschen</a>
+        {% if only_item or only_item_merkmale%}
+        <a class="w-20 btn btn-primary mt-1" href="{% url 'item-add' object.id object.compare_reference.id %}"><i
+            class="fas fa-sitemap"></i> Referenz
+          FCT-Erweitern</a>
+        {% else %}
+        <a class="w-20 btn btn-primary mt-1" href="{% url 'item-fct' object.id object.compare_reference.id %}"><i
+            class="fas fa-euro-sign"></i> Änderungskosten</a>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+  {% if only_item or only_item_merkmale%}
+  <div class="container" style="background-color:rgb(255, 245, 238, 0.8) ;border-radius: 4px;
+  color: rgba(21, 52, 78, 0.8);">
+    <div class="row">
+      <div class="col">
+        <p class="display-5 text-center">
+          Neue Features und Merkmale
+        </p>
+        <p>
+          {% for oi in only_item %}
+          {{oi}}
+          {% endfor %}
+          {% for oim in only_item_merkmale %}
+          {{oim}}
+          {% endfor %}
+        </p>
+      </div>
+    </div>
+    {% else %}
+    {% if fuzzy_not or fuzzy_maybe %}
+    <div class="container" style="background-color:rgb(255, 245, 238, 0.8) ;border-radius: 4px;
+  color: rgba(21, 52, 78, 0.8);">
+      <div class="col-sm">
+        <div class="row">
+          <p class="display-5 text-center p-2">
+            Technologisch nicht Umsetzbar
+          </p>
+        </div>
+        <div class="row">
+          <ul>
+            <div class="table-responsive">
+              {% for m in fuzzy_maybe %}
+              <table class="table table-striped table-hover table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col">Feature</th>
+                    <th scope="col">Merkmal</th>
+                    <th scope="col">Wert</th>
+                    <th scope="col">Werkzeug</th>
+                    <th scope="col">technologische Machbarkeit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <td>{{ m.f_name }}</td>
+                  <td>{{ m.m_name}}</td>
+                  <td>{{ m.value }}</td>
+                  <td>{{ m.tool_name}}</td>
+                  <td>Unsicherheit <i class="fas fa-exclamation-triangle"></i></td>
+                </tbody>
+              </table>
+              {% endfor %}
+            </div>
+            <div class="table-responsive">
+              {% for n in fuzzy_not %}
+              <table class="table table-striped table-hover table-sm">
+                <thead>
+                  <tr>
+                    <th scope="col">Feature</th>
+                    <th scope="col">Merkmal</th>
+                    <th scope="col">Wert</th>
+                    <th scope="col">Werkzeug</th>
+                    <th scope="col">technologische Machbarkeit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <td>{{ n.f_name }}</td>
+                  <td>{{ n.m_name}}</td>
+                  <td>{{ n.value }}</td>
+                  <td>{{ n.tool_name}}</td>
+                  <td>nicht Umsetzbar <i class="far fa-times-circle"></i></i></td>
+                </tbody>
+              </table>
+              {% endfor %}
+            </div>
+          </ul>
+        </div>
+      </div>
+    </div>
+    {% else %}
+    <div class="container" style="background-color:rgb(255, 245, 238, 0.8) ;border-radius: 4px;
+  color: rgba(21, 52, 78, 0.8);">
+      <div class="row">
+        <div class="col">
+          <p class="display-5 text-center">
+            Änderungskosten
+          </p>
+        </div>
+      </div>
+      <div class="row p-1">
+        <div class="col">
+        </div>
+        <div class="col-10">
+          <div class="row px-3 justify-content">
+            <ul>
+              <ul>
+                <div class="table-responsive">
+                  <table class="table table-striped table-hover table-sm">
+                    <thead>
+                      <tr>
+                        <th scope="col">Änderungskosten (Gewinnänderung)</th>
+                        <th scope="col">Herstellkostenänderung</th>
+                        <th scope="col">Stückzahländerung</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <td>{{cost_ecr.G|floatformat:"2"}} €</td>
+                      <td>{{cost_ecr.Kh|floatformat:"2"}} €</td>
+                      <td>{{cost_ecr.npf|floatformat:"0"}} Stück</td>
+                    </tbody>
+                  </table>
+                </div>
+              </ul>
+            </ul>
+          </div>
+        </div>
+        <div class="col">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm">
+          <div class="row">
+            <p class="display-5 text-center p-2">
+              Vergleichsbauteil (ECR)
+            </p>
+          </div>
+          <div class="row">
+            <ul>
+              <div class="table-responsive">
+                <table class="table table-striped table-hover table-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">Gewinn</th>
+                      <th scope="col">Herstellkosten</th>
+                      <th scope="col">Stückzahl</th>
+                      <th scope="col">Fertigungsstückkosten</th>
+                      <th scope="col">Herstellkosten pro Stück</th>
+                      <th scope="col">Materialkosten</th>
+                      <th scope="col">Rohmaterialkosten</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <td>{{ecr.Gpf|floatformat:"2"}} €</td>
+                    <td>{{ecr.Kh_npf|floatformat:"2"}} €</td>
+                    <td>{{ecr.npf_max|floatformat:"0"}} Stück</td>
+                    <td>{{ecr.Kf_fpf|floatformat:"2"}} €</td>
+                    <td>{{ecr.Kh|floatformat:"2"}} €</td>
+                    <td>{{ecr.Kma|floatformat:"2"}} €</td>
+                    <td>{{ecr.Krm|floatformat:"2"}} Stück</td>
+                  </tbody>
+                </table>
+              </div>
+            </ul>
+          </div>
+        </div>
+        <div class="col-sm">
+          <div class="row">
+            <p class="display-5 text-center p-2">
+              Referenzbauteil
+            </p>
+          </div>
+          <div class="row">
+            <ul>
+              <div class="table-responsive">
+                <table class="table table-striped table-hover table-sm">
+                  <thead>
+                    <tr>
+                      <th scope="col">Gewinn</th>
+                      <th scope="col">Herstellkosten</th>
+                      <th scope="col">Stückzahl</th>
+                      <th scope="col">Fertigungsstückkosten</th>
+                      <th scope="col">Herstellkosten pro Stück</th>
+                      <th scope="col">Materialkosten</th>
+                      <th scope="col">Rohmaterialkosten</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <td>{{ref.Gpf|floatformat:"2"}} €</td>
+                    <td>{{ref.Kh_npf|floatformat:"2"}} €</td>
+                    <td>{{ref.npf_max|floatformat:"0"}} Stück</td>
+                    <td>{{ref.Kf_fpf|floatformat:"2"}} €</td>
+                    <td>{{ref.Kh|floatformat:"2"}} €</td>
+                    <td>{{ref.Kma|floatformat:"2"}} €</td>
+                    <td>{{ref.Krm|floatformat:"2"}} Stück</td>
+                  </tbody>
+                </table>
+              </div>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endif %}
+  </div>
+
+  {% endblock %}

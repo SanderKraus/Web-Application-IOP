@@ -1,0 +1,101 @@
+{% extends "base.html" %}{% load static %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="header mb-2">
+      <h2 class='display-4 text-center pb-5' style='font-size:70px;'>
+        Bauteil hochladen
+      </h2>
+      <ul>
+        <a class="w-20 btn btn-secondary mt-1" href="{% url 'item-list' %}"><i class="fas fa-arrow-left"></i>
+          Zurück</a>
+      </ul>
+      <ul>
+        <form method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-sm">
+              Bauteil name
+            </div>
+            <div class="col-sm">
+              {{ form.name}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Referenzsystem
+            </div>
+            <div class="col-sm">
+              {{ form.compare_reference}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Datei
+            </div>
+            <div class="col-sm">
+              {{ form.file}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Prismatische Grundform
+            </div>
+            <div class="col-sm">
+              {{ form.prismatic}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Länge [mm]
+            </div>
+            <div class="col-sm">
+              {{ form.laenge}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Breite [mm]
+            </div>
+            <div class="col-sm">
+              {{ form.breite}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Höhe [mm]
+            </div>
+            <div class="col-sm">
+              {{ form.hoehe}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Durchmesser
+            </div>
+            <div class="col-sm">
+              {{ form.durchmesser}}
+            </div>
+          </div>
+          <button class="w-20 btn btn-success mt-2" type="submit"><i class="fas fa-cloud-upload-alt"></i>
+            Hochladen</button>
+        </form>
+      </ul>
+      {% if form.errors %}
+      {% for field in form %}
+      {% for error in field.errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">
+        <strong>{{ error|escape }}</strong>
+      </div>
+      {% endfor %}
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "base.html" %}{% load static %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="header mb-2">
+      <h2 class='display-4 text-center pb-5' style='font-size:70px;'>
+        Werkzeug:
+      </h2>
+      <ul>
+        {{tool}}
+        <a class="w-20 btn btn-secondary m-3" href="{% url 'technology-detail' technology.id %}"><i
+            class="fas fa-arrow-left"></i>
+          Zurück</a>
+        <form method="post">
+          {% csrf_token %}
+          <div class="row">
+            <div class="col-sm">
+              Werkzeugname
+            </div>
+            <div class="col-sm">
+              {{ form.name}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Verteilzeit [s]
+            </div>
+            <div class="col-sm">
+              {{ form.verteilzeit}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Rüstzeit [s]
+            </div>
+            <div class="col-sm">
+              {{ form.ruestzeit}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Erholungszeit [s]
+            </div>
+            <div class="col-sm">
+              {{ form.erholungszeit}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Werkzeugwechselzeit [s]
+            </div>
+            <div class="col-sm">
+              {{ form.werkzeugwechselzeit}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Werkstückwechselzeit [s]
+            </div>
+            <div class="col-sm">
+              {{ form.werkstueckwechselzeit}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Betriebsstoffkosten [€]
+            </div>
+            <div class="col-sm">
+              {{ form.betriebsstoffkosten}}
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm">
+              Werkzeugpreis [€]
+            </div>
+            <div class="col-sm">
+              {{ form.werkzeugpreis}}
+            </div>
+          </div>
+          <input class="w-20 btn btn-success mt-1" type="submit" value="Technologie hinzufügen">
+        </form>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

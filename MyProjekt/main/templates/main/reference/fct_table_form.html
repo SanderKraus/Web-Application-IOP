@@ -1,0 +1,109 @@
+{% extends "base.html" %}{% load static %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="header mb-2">
+      <p class='display-5 text-center'>
+        {{reference.name}}
+      </p>
+      <p class="display-4 text-center">
+        FCT-Tabelle
+      </p>
+      <ul>
+        <a class="w-20 btn btn-secondary mt-1" href="{% url 'referencemodel-detail' reference.id %}"><i
+            class="fas fa-arrow-left"></i> Zurück</a>
+      </ul>
+    </div>
+  </div>
+  <form method="POST">
+    {% csrf_token %}
+    <div class="container" style="background-color:rgb(255, 245, 238, 0.8) ;border-radius: 4px;
+  color: rgba(21, 52, 78, 0.8);">
+      <div class="row">
+        <div class="table-responsive fixed-table-body p-3">
+          <table class="table table-striped table-hover table-sm table-bordered border-white my-2"
+            style="background-color: seashell;">
+            <thead>
+              <tr>
+                <th>
+                  <h5>
+                    Feature
+                  </h5>
+                </th>
+                <th>
+                  <h5>
+                    Merkmal
+                  </h5>
+                </th>
+                <th>
+                  <h5>
+                    Wert
+                  </h5>
+                </th>
+                {% for form in reference.fctmembership_set.all %}
+                <th>{{form.tool.name}}</th>
+                <th>Input: {{form.tool.name}}</th>
+                <th>Output: {{form.tool.name}}</th>
+                {% endfor %}
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>{{merkmal.feature.name}}</td>
+                <td>{{merkmal.name}}</td>
+                <td>{{merkmal.value}}</td>
+                {% for form in formset %}
+                <div style="display:none;">
+                  {{form.id}}
+                  {{form.membership}}
+                  {{form.feature_attribute}}
+                </div>
+                <td>{{form.tool_attribute}}</td>
+                <td>{{form.input}}</td>
+                <td>{{form.output}}</td>
+                {% endfor %}
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="row p-3">
+        <div class="col-5">
+          <button class="btn btn-success" type="submit"><i class="far fa-save"></i> Änderung
+            Speichern
+          </button>
+        </div>
+        <div class="col-3">
+          {% if back %}
+          <p>{{back.feature.name}} {{back.name}}</p>
+          <a class="btn btn-primary" href="{% url 'fct-table' reference.id back.id %}"><i
+              class="fas fa-arrow-circle-up"></i>Merkmal</a>
+          {% endif %}
+        </div>
+        <div class="col-3">
+          {% if next %}
+          <p>{{next.feature.name}} {{next.name}}</p>
+          <a class="btn btn-primary" href="{% url 'fct-table' reference.id next.id %}"><i
+              class="fas fa-arrow-circle-down"></i>Merkmal</a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    <div class="box2">
+      {{formset.management_form}}
+      {% if formset.errors %}
+      {{formset.errors}}
+      {% endif %}
+      {% for a in merkmal.fctattribute_set.all %}
+      <p>Technologische Machbarkeit -{{a.tool_attribute}}- : {{a.output_possible}}</p>
+      {% endfor %}
+    </div>
+  </form>
+  <script>
+    //Aktiviere Funktion wenn Werte eigetragen
+    //window.onbeforeunload = function () {
+     // return 'Sie haben die Werte nicht gespeichert, trotzdem fortfahren?';
+    //};
+  </script>
+</div>
+{% endblock %}

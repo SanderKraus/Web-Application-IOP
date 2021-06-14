@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-3">
+  <div class="row">
+    <div class="header mb-2">
+      <p class="display-5 text-center">Technologie</p>
+      <p class='display-1 text-center'>
+        {{object.name}}
+      </p>
+      <ul>
+        <a class="w-20 btn btn-secondary mt-1" href="{% url 'technology-list' %}"><i class="fas fa-arrow-left"></i>
+          Zurück</a>
+        <a class="w-20 btn btn-light mt-1" style="color: orange;" href="{% url 'technology-update' object.id %}"><i
+            class="fas fa-pencil-alt"></i>
+          Update</a>
+        <a class="w-20 btn btn-light mt-1" style="color: red;" href="{% url 'technology-delete' object.id %}"><i
+            class="far fa-trash-alt"></i>
+          Technologie löschen</a>
+        <a class="w-20 btn btn-primary mt-1" href="{% url 'tool-create' object.id %}"><i class="fas fa-hammer"></i>
+          Werkzeug anglegen</a>
+      </ul>
+      <div class="container mb-2" style="background-color:rgb(255, 245, 238, 0.8) ;border-radius: 4px;
+          color: rgba(21, 52, 78, 0.8);">
+        <h5 class="pt-1">
+          Maschinenparameter
+        </h5>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-sm">
+
+            <thead>
+              <tr>
+                <td scope="col">Anschaffungswert</td>
+                <td scope="col">Verkaufserlös</td>
+                <td scope="col">Abschreibungsdauer</td>
+                <td scope="col">Platzbedarf</td>
+                <td scope="col">mittlere Leistung</td>
+                <td scope="col">Restfertigungsgemeinkosten</td>
+                <td scope="col">Instandhaltungsfaktor</td>
+                <td scope="col">Quadratmeterpreis</td>
+                <td scope="col">Strompreis</td>
+                <td scope="col">Stundenlohn</td>
+                <td scope="col">Zinssatz</td>
+                <td scope="col">Anzahl Fertigungsmittel</td>
+                <td scope="col">Bediehnverhältnis</td>
+              </tr>
+            </thead>
+            <tbody>
+              <td>{{object.anschaffungswert}} €</td>
+              <td>{{object.verkaufserlös}} €</td>
+              <td>{{object.abschreibungsdauer}} a</td>
+              <td>{{object.platzbedarf}} qm</td>
+              <td>{{object.mittlere_leistung}} kW</td>
+              <td>{{object.restfertigungsgemeinkosten}} €</td>
+              <td>{{object.instandhaltungsfaktor}}</td>
+              <td>{{object.quadratmeterpreis}} €/qm</td>
+              <td>{{object.strompreis}} €/kWh</td>
+              <td>{{object.stundenlohn}} €/h</td>
+              <td>{{object.zinsatz}}</td>
+              <td>{{object.fertigungsmittelanzahl}}</td>
+              <td>{{object.bediehnverhaeltnis}}</td>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container" style="background-color:rgb(255, 245, 238, 0.8) ;border-radius: 4px;
+  color: rgba(21, 52, 78, 0.8);">
+    <div class="row">
+      <div class="col">
+        <p class="display-5 text-center">
+          Liste der Werkzeuge
+        </p>
+      </div>
+    </div>
+    {% for tool in tools %}
+    <div class="row p-1">
+      <div class="col d-flex flex-column " style="background-color: rgba(21, 52, 78, 0.8);border-radius: 4px;">
+        <div class="row">
+          <div class="col-sm">
+            <div class="row-sm">
+              <h3 style="color: seashell;">
+                {{tool.name}}
+              </h3>
+            </div>
+            <div class="row-sm">
+              <a class="w-20 btn btn-light mt-1" style="color: orange;" href="{% url 'tool-update' tool.id %}"><i
+                  class="fas fa-pencil-alt"></i>
+              </a>
+              <a class="w-20 btn btn-light mt-1" style="color: red;"
+                href="{% url 'tool-delete' pk=tool.id technology_id=object.id %}"><i class="far fa-trash-alt"></i>
+              </a>
+            </div>
+          </div>
+          <div class="col-sm-8">
+            <h5 class="pt-1" style="color: seashell;">
+              technologische Parameter
+            </h5>
+            <div class="table-responsive">
+              <table class="table table-striped table-hover table-sm" style="color: seashell;">
+                <thead>
+                  <tr>
+                    <td scope="col">Verteilzeit</td>
+                    <td scope="col">Rüstzeit</td>
+                    <td scope="col">Erholungszeit</td>
+                    <td scope="col">Werkzeugwechselzeit</td>
+                    <td scope="col">Werkstückwechselzeit</td>
+                    <td scope="col">Betriebsstoffkosten</td>
+                    <td scope="col">Werkzeugpreis</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <td style="color: seashell;">{{tool.verteilzeit}} s</td>
+                  <td style="color: seashell;">{{tool.ruestzeit}} s</td>
+                  <td style="color: seashell;">{{tool.erholungszeit}} s</td>
+                  <td style="color: seashell;">{{tool.werkzeugwechselzeit}} s</td>
+                  <td style="color: seashell;">{{tool.werkstueckwechselzeit}} s</td>
+                  <td style="color: seashell;">{{tool.betriebsstoffkosten}} €</td>
+                  <td style="color: seashell;">{{tool.werkzeugpreis}} €</td>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row p-4">
+      <div class="col-sm">
+        <div class="row">
+          <h4>
+            Leistungsfähigkeitsprofile
+          </h4>
+        </div>
+        <div class="row-sm">
+          <a class="w-20 btn btn-primary mt-1" href="{% url 'attr-create' tool.id %}"><i class="fas fa-plus">
+            </i> Leistungsfähigkeitsprofil</a>
+        </div>
+      </div>
+      <div class="col-sm">
+        {% for attr in tool.toolattribute_set.all %}
+        <div class="row m-2" style="background-color: rgba(21, 52, 78, 0.8);border-radius: 4px;">
+          <div class="col-sm" style="color: seashell;">
+            <h5>
+              {{attr.name}}
+            </h5>
+            <a class="btn btn-light rounded-circle change" style="color: orange;"
+              href="{% url 'attr-update' pk=attr.id %}"><i class="fas fa-pencil-alt"></i></a>
+            <a class="btn btn-light rounded-circle delete" style="color: red;"
+              href="{% url 'attr-delete' pk=attr.id technology_id=object.id %}"><i class="far fa-trash-alt"></i>
+            </a>
+          </div>
+          <div class="col-sm">
+            <div class="table-responsive">
+              <table class="table table-striped table-hover table-sm" style="color: seashell;">
+                <thead>
+                  <p class="pt-1" style="color: seashell;">
+                    Fuzzyparameter in {{attr.einheit}}
+                  </p>
+                  <tr>
+                    <td scope="col">a</td>
+                    <td scope="col">b</td>
+                    <td scope="col">c</td>
+                    <td scope="col">d</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <td style="color: seashell;">{{attr.a}}</td>
+                  <td style="color: seashell;">{{attr.b}}</td>
+                  <td style="color: seashell;">{{attr.c}}</td>
+                  <td style="color: seashell;">{{attr.d}}</td>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+<style>
+  .delete:hover {
+    font-size: 15px;
+    border-color: red;
+  }
+
+  .change:hover {
+    font-size: 15px;
+    border-color: orange;
+  }
+</style>
+{% endblock %}
