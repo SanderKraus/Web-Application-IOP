@@ -45,7 +45,7 @@ python MyProject/manage.py runserver
 Das Web-Kostentool ermöglicht das Benutzen der entwickelten Methode über einen Webbrowser und die Speicherung der Daten in einer SQLite-Datenbank.
 
 ## Durchführung
-# Initialisierung Referenzsystem
+### Initialisierung Referenzsystem
 1. Technologien anlgegen
 2. Neues Referenzsystem anlegen
 3. Excel-Datei im Referenzsystem hochladen
@@ -54,7 +54,7 @@ Das Web-Kostentool ermöglicht das Benutzen der entwickelten Methode über einen
 6. Nachdem alle FCT-Werte eingetragen sind muss der BUTTO #Volumenberechnen auf der Detailseite des Referenzsystems gedrückt werden (danach ist das Bauteilvolumen innerhalb der Fertigungskette berechnet und abgespeichert)
 7. Referenzsystem ist angelegt und steht für einen Vergleich mit eingehenden Produktänderungen zur Verfügung
 
-# Vergleich
+### Vergleich
 1. Neues Vergelichssystem anlegen
 2. Excel-Datei mit Produktänderungen hochladen
 3. Referenzsystem auswählen mit dem die Produktänderung verglichen werden soll
