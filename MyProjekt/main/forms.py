@@ -19,7 +19,7 @@ class ReferenceItemUploadForm(forms.Form):
     '''
     name = forms.CharField(max_length=255)
     file = forms.FileField()
-    prismatic = forms.BooleanField(initial=True)
+    prismatic = forms.BooleanField(initial=True, required=False)
     laenge = forms.FloatField(required=False)
     breite = forms.FloatField(required=False)
     hoehe = forms.FloatField(required=False)
@@ -58,7 +58,7 @@ class ItemUploadForm(forms.Form):
     compare_reference = forms.ModelChoiceField(
         queryset=ReferenceSystem.objects.all())
     file = forms.FileField()
-    prismatic = forms.BooleanField(initial=True)
+    prismatic = forms.BooleanField(initial=True, required=False)
     laenge = forms.FloatField(required=False)
     breite = forms.FloatField(required=False)
     hoehe = forms.FloatField(required=False)

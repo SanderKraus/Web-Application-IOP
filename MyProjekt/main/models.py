@@ -297,6 +297,9 @@ class Volume(models.Model):
         # Initialfeature rotationssymmetrisch, Bohrung und zyl.Wellenabsatz
         elif self.volume_type in [self.ROTATIONSSYMMETRISCH,
                                   self.BOHRUNG, self.WELLENABSATZ_ZYLINDRISCH]:
+            print('hiiiiiii')
+            print(self.durchmesser)
+            print(self.laenge)
             return math.pi * pow(self.durchmesser/2, 2) * self.laenge
         # T-Nut
         elif self.volume_type == self.T_NUT:
@@ -352,17 +355,28 @@ class Halbzeug(models.Model):
         # TODO: add rotationssymmetrisch to calculation
         # TODO: handle exception if volume calculation fails
         # Volumenberechnung prismatisches Halbzeug
-        vol_model = Volume(
-            volume_type='prismatisch',
-            hoehe=self.hoehe,
-            breite=self.breite,
-            laenge=self.laenge
-        ).calculate_volume()
+        if self.laenge and self.durchmesser:
+            vol_model = Volume(
+                volume_type='rotationssymmetrisch',
+                laenge=self.laenge,
+                durchmesser=self.durchmesser
+            ).calculate_volume()
+        else:
+            vol_model = Volume(
+                volume_type='prismatisch',
+                hoehe=self.hoehe,
+                breite=self.breite,
+                laenge=self.laenge
+            ).calculate_volume()
+
         self.volume = vol_model
 
     # in Datenbank abspeichern
     def save(self, *args, **kwargs) -> None:
         self.calculate_volume()
+        print('ooooooooooooooooo')
+        print(self.volume)
+
         super(Halbzeug, self).save(*args, **kwargs)
 
 

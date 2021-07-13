@@ -18,7 +18,7 @@ from django.views.generic.edit import (
     CreateView, FormView, UpdateView, DeleteView)
 from extra_views.formsets import ModelFormSetMixin, ModelFormSetView
 
-from .models import CostReference, EcrCost, EcrFuzzy, FctAttribute, FctMembership, Feature, FeatureAttribute, Result
+from .models import CostReference, EcrCost, EcrFuzzy, FctAttribute, FctMembership, Feature, FeatureAttribute, Halbzeug, Result
 from .models import Item, ReferenceSystem, Technology, Tool, ToolAttribute
 from .models import Volume
 from .forms import AddTechnologyToReferenceSystemForm, ItemUploadForm, ReferenceItemUploadForm
@@ -1017,6 +1017,9 @@ class ItemFctBackwards(RedirectView):
 
         system = ReferenceSystem.objects.get(pk=self.kwargs.get('reference'))
         hz = system.item.halbzeug_set.first()
+        hz: Halbzeug
+        print('Halbezug1111111')
+        print(hz.pk)
 
         # für jede Technologie der Fertigungsprozessfolge werden die KOSTEN berechnet
         for ref in members:
