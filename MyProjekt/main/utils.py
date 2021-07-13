@@ -18,13 +18,21 @@ def processing_excel_file_buffer(form, xlsx_buffer) -> pd.DataFrame:
 
     # append initialfeature an FCT-Tabelle anhängen
     # TODO: add non-prismatic check and if-clause
-    df = df.append({
-        'Name': 'kontur',
-        'Classifier': 'prismatisch',
-        'Länge : length[millimetre]': f"{form.cleaned_data.get('laenge')} mm",
-        'Höhe : length[millimetre]': f"{form.cleaned_data.get('hoehe')} mm",
-        'Breite : length[millimetre]': f"{form.cleaned_data.get('breite')} mm",
-    }, ignore_index=True)
+    if form.cleaned_data.get('prismatic'):
+        df = df.append({
+            'Name': 'kontur',
+            'Classifier': 'prismatisch',
+            'Länge : length[millimetre]': f"{form.cleaned_data.get('laenge')} mm",
+            'Höhe : length[millimetre]': f"{form.cleaned_data.get('hoehe')} mm",
+            'Breite : length[millimetre]': f"{form.cleaned_data.get('breite')} mm",
+        }, ignore_index=True)
+    else:
+        df = df.append({
+            'Name': 'kontur',
+            'Classifier': 'rotationssymmetrisch',
+            'Länge : length[millimetre]': f"{form.cleaned_data.get('laenge')} mm",
+            'Durchmesser : length[millimetre]': f"{form.cleaned_data.get('durchmesser')} mm",
+        }, ignore_index=True)
     # Datentypen zuweisen
     for col in df.columns.tolist():
         if 'Boolean' in col:
@@ -57,6 +65,12 @@ def create_features_from_df(df: pd.DataFrame, model: Item) -> None:
                 laenge=row['länge'],
                 hoehe=row['höhe'],
                 breite=row['breite'],
+            ).save()
+        elif row['name'] == 'halbzeug_rotatorisch':
+            Halbzeug(
+                item=model,
+                laenge=row['länge'],
+                durchmesser=row['durchmesser'],
             ).save()
         else:
             # hier Feature abspeichern
