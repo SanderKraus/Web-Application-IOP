@@ -31,7 +31,7 @@ pip install -r requirements.txt
 3. Das Kostentool starten
 
 ```
-python MyProject/manage.py runserver
+python MyProjekt/manage.py runserver
 ```
 
 ## Requirements
